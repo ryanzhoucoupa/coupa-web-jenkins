@@ -10,6 +10,7 @@ class NotificationsController < ApplicationController
   # GET /notifications/1
   # GET /notifications/1.json
   def show
+    @notification = Notification.find_by(id: params[:id])
   end
 
   # GET /notifications/new

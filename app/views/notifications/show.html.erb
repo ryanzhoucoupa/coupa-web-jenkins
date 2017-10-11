@@ -1,4 +1,8 @@
 <p id="notice"><%= notice %></p>
+<pre><%= @notification.to %></pre>
+<pre><%= @notification.title %></pre>
+<pre><%= @notification.body %></pre>
+<pre><%= @notification.data %></pre>
 
 <%= link_to 'Edit', edit_notification_path(@notification) %> |
 <%= link_to 'Back', notifications_path %>
