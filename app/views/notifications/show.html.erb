@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
-<pre><%= @notification.to %></pre>
-<pre><%= @notification.title %></pre>
-<pre><%= @notification.body %></pre>
-<p>
+<pre><span>TO: </span><%= @notification.to %></pre>
+<pre><span>TITLE: </span><%= @notification.title %></pre>
+<pre><span>BODY: </span><%= @notification.body %></pre>
+<p><span>DATA: </span>
   <% payload = JSON.parse(@notification.data) %>
   <pre><%= JSON.pretty_generate(payload) %></pre>
 </p>
