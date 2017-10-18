@@ -27,7 +27,7 @@ class NotificationsController < ApplicationController
   def create
     notification_params = params.slice(:to, :title, :body).merge(data: params[:data])
 
-    @notification = Notification.find_or_create_by(to: params[:data][:ghprbPullId]) |notification|
+    @notification = Notification.find_or_create_by(to: params[:data][:ghprbPullId]) do |notification|
       data = []
       data = JSON.parse(notification.data) if notification.data
       notification.to = notification_params[:to]
