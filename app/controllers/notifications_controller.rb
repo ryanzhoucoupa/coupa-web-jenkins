@@ -39,6 +39,29 @@ class NotificationsController < ApplicationController
     end
   end
 
+  def deliver
+    id = params.fetch(:id, nil)
+    notification = Notification.find_by(id: id)
+
+    if notification
+      exponent = Exponent::Push::Client.new
+
+      messages = [{
+        to: notification.to,
+        title: notification.title,
+        body: notification.body,
+        data: notification.data
+      }]
+
+      exponent.publish messages
+      flash[:notice] = 'Delivered'
+    else
+      flash[:error] = 'Notification not found'
+    end
+
+    redirect_to notifications_path
+  end
+
   # PATCH/PUT /notifications/1
   # PATCH/PUT /notifications/1.json
 #  def update
