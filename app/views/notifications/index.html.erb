@@ -15,7 +15,7 @@
         <td><%= notification.id %></td>
         <td><%= link_to 'Show', notification %></td>
         <td><%= link_to 'Edit', edit_notification_path(notification) %></td>
-        <td><%= notification.created_at %></td>
+        <td><%= notification.created_at.in_time_zone('Pacific Time (US & Canada)') %></td>
         <td><%= link_to 'Destroy', notification, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <td><%= link_to 'Deliver', deliver_notification_path(notification), method: :post  %></td>
       </tr>
