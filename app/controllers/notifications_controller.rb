@@ -25,22 +25,19 @@ class NotificationsController < ApplicationController
   # POST /notifications
   # POST /notifications.json
   def create
-=begin
-    "ci/jenkins-unit" => {
-      "context" => "ci/jenkins-unit"
-      "status" => "pending",
-      "comment" => "asdfasdf",
-      "url" => "asdf",
-      "ghprbPullId" => '123123'
+    notification_params = params.slice(:to, :title, :body).merge(data: params[:data])
 
-    }
-=end
-
-    notification_params = params.slice(:to, :title, :body).merge(data: params[:data].to_json)
-    @notification = Notification.new(notification_params)
+    @notification = Notification.find_or_create_by(to: params[:data][:ghprbPullId]) |notification|
+      data = []
+      data = JSON.parse(notification.data) if notification.data
+      notification.to = notification_params[:to]
+      notification.title = notification_params[:title]
+      notification.body = notification_params[:body]
+      notification.data = process_notification_data(data, notification_params[:data]).to_json
+    end
 
     respond_to do |format|
-      if @notification.save
+      if @notification.id
         format.html { redirect_to @notification, notice: 'Notification was successfully created.' }
         format.json { render :show, status: :created, location: @notification }
       else
@@ -116,6 +113,18 @@ class NotificationsController < ApplicationController
   end
 
   private
+    def process_notification_data(current_data, new_data)
+      index = current_data.find_index { |d| d['context'] == new_data['context'] }
+
+      if index
+        current_data[index].merge!(new_data)
+      else
+        curernt_data.push(new_data)
+      end
+
+      current_data
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_notification
       @notification = Notification.find(params[:id])
