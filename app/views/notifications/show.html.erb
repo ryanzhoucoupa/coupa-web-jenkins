@@ -2,7 +2,10 @@
 <pre><%= @notification.to %></pre>
 <pre><%= @notification.title %></pre>
 <pre><%= @notification.body %></pre>
-<pre><%= @notification.data %></pre>
+<p>
+  <% payload = JSON.parse(@notification.data) %>
+  <pre><%= JSON.pretty_generate(payload) %></pre>
+</p>
 
 <%= link_to 'Deliver', deliver_notification_path(@notification), method: :post %> | 
 <%= link_to 'Edit', edit_notification_path(@notification) %> |
