@@ -50,7 +50,7 @@ class NotificationsController < ApplicationController
         to: notification.to,
         title: notification.title,
         body: notification.body,
-        data: JSON.parse(notification.data)
+        data: notification.data
       }]
 
       exponent.publish messages
