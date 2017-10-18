@@ -25,7 +25,7 @@ class NotificationsController < ApplicationController
   # POST /notifications
   # POST /notifications.json
   def create
-    notification_params = params.slice(:to, :title, :body).merge(data: params[:data].to_s)
+    notification_params = params.slice(:to, :title, :body).merge(data: params[:data].to_json)
     @notification = Notification.new(notification_params)
 
     respond_to do |format|
@@ -50,7 +50,7 @@ class NotificationsController < ApplicationController
         to: notification.to,
         title: notification.title,
         body: notification.body,
-        data: notification.data
+        data: JSON.parse(notification.data)
       }]
 
       exponent.publish messages
