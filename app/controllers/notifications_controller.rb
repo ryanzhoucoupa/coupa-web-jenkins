@@ -26,18 +26,19 @@ class NotificationsController < ApplicationController
   # POST /notifications.json
   def create
     notification_params = params.slice(:to, :title, :body).merge(data: params[:data])
-
-    @notification = Notification.find_or_create_by(to: params[:data][:ghprbPullId]) do |notification|
-      data = []
-      data = JSON.parse(notification.data) if notification.data
+byebug
+    @notification = Notification.find_or_create_by(pr_id: notification_params[:data][:ghprbPullId]) do |notification|
       notification.to = notification_params[:to]
       notification.title = notification_params[:title]
       notification.body = notification_params[:body]
-      notification.data = process_notification_data(data, notification_params[:data]).to_json
     end
 
+    data = []
+    data = JSON.parse(@notification.data) if @notification.data
+    @notification.data = process_notification_data(data, notification_params[:data]).to_json
+
     respond_to do |format|
-      if @notification.id
+      if @notification.save
         format.html { redirect_to @notification, notice: 'Notification was successfully created.' }
         format.json { render :show, status: :created, location: @notification }
       else
@@ -119,7 +120,7 @@ class NotificationsController < ApplicationController
       if index
         current_data[index].merge!(new_data)
       else
-        curernt_data.push(new_data)
+        current_data.push(new_data)
       end
 
       current_data
