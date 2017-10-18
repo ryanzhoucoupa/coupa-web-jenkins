@@ -45,15 +45,13 @@ class NotificationsController < ApplicationController
 
     if notification
       exponent = Exponent::Push::Client.new
-
-      messages = [{
-        to: notification.to,
+      exponent.publish(
+        exponentPushToken: notification.to,
         title: notification.title,
         body: notification.body,
-        data: JSON.parse(notification.data)
-      }]
+        data: JSON.parse(notification.data) # Data is required, pass any arbitrary data to include with the notification
+      )
 
-      exponent.publish messages
       flash[:notice] = 'Delivered'
     else
       flash[:error] = 'Notification not found'
