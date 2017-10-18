@@ -1,4 +1,4 @@
-kclass NotificationsController < ApplicationController
+class NotificationsController < ApplicationController
   before_action :set_notification, only: [:show, :edit, :update, :destroy]
   protect_from_forgery :except => [:create]
   # GET /notifications
