@@ -1,4 +1,4 @@
-class NotificationsController < ApplicationController
+kclass NotificationsController < ApplicationController
   before_action :set_notification, only: [:show, :edit, :update, :destroy]
   protect_from_forgery :except => [:create]
   # GET /notifications
@@ -25,6 +25,17 @@ class NotificationsController < ApplicationController
   # POST /notifications
   # POST /notifications.json
   def create
+=begin
+    "ci/jenkins-unit" => {
+      "context" => "ci/jenkins-unit"
+      "status" => "pending",
+      "comment" => "asdfasdf",
+      "url" => "asdf",
+      "ghprbPullId" => '123123'
+
+    }
+=end
+
     notification_params = params.slice(:to, :title, :body).merge(data: params[:data].to_json)
     @notification = Notification.new(notification_params)
 
@@ -66,6 +77,16 @@ class NotificationsController < ApplicationController
     end
 
     redirect_to notifications_path
+  end
+
+  def list
+    push_token = params.fetch(:pt, nil)
+
+    if push_token
+      notifications = Notification.select(:data).where(to: push_token).order(:id)
+    end
+
+    render json: notifications
   end
 
   # PATCH/PUT /notifications/1
