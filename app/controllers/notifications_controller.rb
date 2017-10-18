@@ -84,9 +84,11 @@ class NotificationsController < ApplicationController
 
     if push_token
       notifications = Notification.select(:data).where(to: push_token).order(:id)
+      render json: notifications.map(&:data)
+      return
     end
 
-    render json: notifications.map(&:data)
+    head :bad_request
   end
 
   # PATCH/PUT /notifications/1
