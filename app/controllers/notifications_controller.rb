@@ -26,7 +26,7 @@ class NotificationsController < ApplicationController
   # POST /notifications.json
   def create
     notification_params = params.slice(:to, :title, :body).merge(data: params[:data])
-byebug
+
     @notification = Notification.find_or_create_by(pr_id: notification_params[:data][:ghprbPullId]) do |notification|
       notification.to = notification_params[:to]
       notification.title = notification_params[:title]
