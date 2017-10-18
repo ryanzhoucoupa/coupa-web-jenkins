@@ -44,12 +44,20 @@ class NotificationsController < ApplicationController
     notification = Notification.find_by(id: id)
 
     if notification
-      exponent = Exponent::Push::Client.new
-      exponent.publish(
-        exponentPushToken: notification.to,
+      messages = [{
+        to: notification.to,
         title: notification.title,
         body: notification.body,
-        data: JSON.parse(notification.data) # Data is required, pass any arbitrary data to include with the notification
+        data: JSON.parse(notification.data)
+      }]
+
+      resp = HTTParty.post('https://exp.host/--/api/v2/push/send',
+        body: messages.to_json,
+        headers: {
+          'Content-Type' => 'application/json',
+          'Accept' => 'application/json',
+          'Accept-Encoding' => 'gzip, deflate'
+        }
       )
 
       flash[:notice] = 'Delivered'
