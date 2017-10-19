@@ -4,7 +4,7 @@ class User < ApplicationRecord
 
   def self.find_or_create_from_auth(auth)
     user = User.find_or_create_by(provider: auth['provider'], uid: auth['uid'])
-
+    Rails.logger.info("AUTH= #{auth.to_json}")
     user.github_login = auth['info']['nickname']
     user.nickname = auth['info']['nickname']
     user.name = auth['info']['name']
@@ -15,13 +15,4 @@ class User < ApplicationRecord
     user.save
     user
   end
-
-  def self.current_user
-    Thread.current[:user]
-  end
-
-  def self.current_user=(newUser)
-    Rails.logger.warn("User.current_user= was called with an object not of the User class! Expected User but got '#{newUser.class}'!") unless newUser.nil? || newUser.kind_of?(User)
-    Thread.current[:user] = newUser
-  end  
 end
