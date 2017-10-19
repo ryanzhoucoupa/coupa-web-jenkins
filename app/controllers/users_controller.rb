@@ -25,6 +25,7 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+    user_params = params.slice(:github_login, :expo_push_token)
     @user = User.new(user_params)
 
     respond_to do |format|
@@ -69,7 +70,7 @@ class UsersController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.fetch(:user, {})
-    end
+    #def user_params
+    #  params.fetch(:user, {})
+    #end
 end
