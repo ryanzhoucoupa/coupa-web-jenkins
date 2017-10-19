@@ -57,7 +57,7 @@ class NotificationsController < ApplicationController
         to: notification.user.expo_push_token,
         title: notification.title,
         body: notification.body,
-        data: JSON.parse(notification.data)
+        data: { ghprbPullId: notification.pr_id, data: JSON.parse(notification.data) }
       }]
 
       resp = HTTParty.post('https://exp.host/--/api/v2/push/send',
