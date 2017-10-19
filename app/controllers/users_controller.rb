@@ -65,7 +65,6 @@ class UsersController < ApplicationController
 
   #for updating expo push token
   def ept
-    byebug
     github_login = params.delete(:github_login)
     user_params = params.slice(:expo_push_token)
 
