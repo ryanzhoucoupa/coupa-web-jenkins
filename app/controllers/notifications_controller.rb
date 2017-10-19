@@ -52,9 +52,9 @@ class NotificationsController < ApplicationController
     id = params.fetch(:id, nil)
     notification = Notification.find_by(id: id)
 
-    if notification
+    if notification && notification.user.expo_push_token
       messages = [{
-        to: notification.to,
+        to: notification.user.expo_push_token,
         title: notification.title,
         body: notification.body,
         data: JSON.parse(notification.data)
@@ -71,17 +71,17 @@ class NotificationsController < ApplicationController
 
       flash[:notice] = 'Delivered'
     else
-      flash[:error] = 'Notification not found'
+      flash[:error] = 'Notification or user push token not found '
     end
 
     redirect_to notifications_path
   end
 
   def list
-    push_token = params.fetch(:pt, nil)
+    github_login = params.fetch(:github_login, nil)
 
-    if push_token
-      notifications = Notification.select(:data).where(to: push_token).order(:id)
+    if github_login
+      notifications = User.find_by(github_login: github_login).notifications.select(:data).order(:id)
       render json: notifications.map(&:data)
       return
     end
