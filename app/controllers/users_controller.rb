@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
 
     if @user.github_login
-      @qrcode = RQRCode::QRCode.new("https://fierce-meadow-67656.herokuapp.com/ept?ghUser=#{@user.github_login}", :size => 10, :level => :h)
+      @qrcode = RQRCode::QRCode.new("https://fierce-meadow-67656.herokuapp.com/ept.json?ghUser=#{@user.github_login}", :size => 10, :level => :h)
     end
   end
 
