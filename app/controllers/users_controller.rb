@@ -71,9 +71,9 @@ class UsersController < ApplicationController
     @user = User.find_by(github_login: github_login)
 
     if @user.update(user_params)
-      format.json { render json: @user }
+      render json: @user
     else
-      format.json { render json: @user.errors, status: :unprocessable_entity }
+      render json: @user.errors, status: :unprocessable_entity
     end
   end
 
