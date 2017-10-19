@@ -28,7 +28,7 @@ class NotificationsController < ApplicationController
     notification_params = params.slice(:to, :title, :body).merge(data: params[:data])
 
     @notification = Notification.find_or_create_by(pr_id: notification_params[:data][:ghprbPullId]) do |notification|
-      notification.to = notification_params[:to]
+      notification.github_login = notification_params[:to]
       notification.title = notification_params[:title]
       notification.body = notification_params[:body]
     end
