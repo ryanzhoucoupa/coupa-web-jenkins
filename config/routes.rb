@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :users
   resources :notifications do
     member do
       post :deliver
