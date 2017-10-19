@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   put '/ept', to: 'users#ept'
-  resources :users do
+  resources :users, except: [:update] do
     member do
       get :qr
     end

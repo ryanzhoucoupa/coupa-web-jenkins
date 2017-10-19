@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :destroy]
   protect_from_forgery :except => [:create, :ept]
 
   # GET /users
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
       end
     end
   end
-
+=begin
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
@@ -61,9 +61,11 @@ class UsersController < ApplicationController
       end
     end
   end
+=end
 
   #for updating expo push token
   def ept
+    byebug
     github_login = params.delete(:github_login)
     user_params = params.slice(:expo_push_token)
 
@@ -71,10 +73,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
+        format.json { render json: @user }
       else
-        format.html { render :edit }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
