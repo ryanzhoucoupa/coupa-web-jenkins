@@ -83,7 +83,6 @@ class NotificationsController < ApplicationController
     if github_login
       notifications = User.find_by(github_login: github_login).notifications.order(:id)
       render json: notifications.map { |n| { ghprbPullId: n.pr_id, data: JSON.parse(n.data) } }
-      #render json: notifications.map(&:data).reduce([]) { |final, c| final += JSON.parse(c);  final; }
       return
     end
 

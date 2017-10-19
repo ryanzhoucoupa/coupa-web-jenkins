@@ -26,7 +26,8 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     user_params = params.slice(:github_login, :expo_push_token)
-    @user = User.new(user_params)
+    @user = User.find_or_create_by(github_login: user_params[:github_login])
+    @user.expo_push_token = user_params[:expo_push_token]
 
     respond_to do |format|
       if @user.save
