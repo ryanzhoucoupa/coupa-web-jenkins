@@ -1,4 +1,8 @@
 <p id="notice"><%= notice %></p>
 
+<pre><%= @user.id %></pre>
+<pre><%= @user.github_login %></pre>
+<pre><%= @user.expo_push_token %></pre>
+
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

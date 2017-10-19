@@ -1,8 +1,10 @@
 <%= form_with(model: user, local: true) do |form| %>
+  github_login: <%= form.text_field :github_login %><br />
+  expo_push_token: <%= form.text_field :expo_push_token %><br />
+
   <% if user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
       <ul>
       <% user.errors.full_messages.each do |message| %>
         <li><%= message %></li>
