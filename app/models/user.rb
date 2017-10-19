@@ -4,7 +4,6 @@ class User < ApplicationRecord
 
   def self.find_or_create_from_auth(auth)
     user = User.find_or_create_by(provider: auth['provider'], uid: auth['uid'])
-    Rails.logger.info("AUTH= #{auth.to_json}")
     user.github_login = auth['info']['nickname']
     user.nickname = auth['info']['nickname']
     user.name = auth['info']['name']
@@ -12,7 +11,7 @@ class User < ApplicationRecord
     user.image_url = auth['info']['image']
     user.token = auth['credentials']['token']
 
-    user.save
+    user.save!
     user
   end
 end
