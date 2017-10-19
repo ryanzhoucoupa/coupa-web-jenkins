@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+  put '/ept', to: 'users#ept'
   resources :users do
     member do
       get :qr
