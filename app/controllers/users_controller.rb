@@ -22,6 +22,14 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def qr
+    @user = User.find_by(id: params[:id])
+
+    if @user.github_login
+      @qrcode = RQRCode::QRCode.new("https://fierce-meadow-67656.herokuapp.com/ept?ghUser=#{@user.github_login}", :size => 10, :level => :h)
+    end
+  end
+
   # POST /users
   # POST /users.json
   def create

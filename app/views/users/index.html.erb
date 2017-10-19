@@ -13,9 +13,11 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= user.id %></td>
+        <td><%= user.github_login %></td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'QR', qr_user_path(user) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -23,4 +25,4 @@
 
 <br>
 
-<%= link_to 'New User', new_user_path %>
+<%= link_to 'New User (Github)', root_path %> | <%= link_to 'Logout', '/logout', method: :delete %>
