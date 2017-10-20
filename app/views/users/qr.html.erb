@@ -1,6 +1,6 @@
 <h4>Scan with your device to register for push notifications</h4>
 <div id='qrcode'>
-  <%= raw @qrcode.as_html if @qrcode%>
+  <%= image_tag(@qrcode.as_png.to_data_url) if @qrcode%>
 </div>
 <br/>
 <br/>
