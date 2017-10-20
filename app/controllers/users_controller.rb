@@ -67,6 +67,7 @@ class UsersController < ApplicationController
   def ept
     github_login = params.delete(:github_login)
     user_params = params.slice(:expo_push_token)
+    user_params[:active] = true
 
     @user = User.find_by(github_login: github_login)
 
