@@ -23,7 +23,7 @@ a:link {
 
 /* visited link */
 a:visited {
-  color: green;
+  color: gray;
 }
 
 /* mouse over link */
@@ -35,4 +35,9 @@ a:hover {
 /* selected link */
 a:active {
   color: blue;
+}
+
+.center-page {
+  width: 80%;
+  margin: auto;
 }

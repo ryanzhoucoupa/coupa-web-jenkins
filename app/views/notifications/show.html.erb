@@ -1,3 +1,4 @@
+<div class="center-page">
 <p id="notice"><%= notice %></p>
 <pre><span>GITHUB_LOGIN: </span><%= @notification.github_login %></pre>
 <pre><span>TITLE: </span><%= @notification.title %></pre>
@@ -10,3 +11,4 @@
 <%= link_to 'Deliver', deliver_notification_path(@notification), method: :post %> | 
 <%= link_to 'Edit', edit_notification_path(@notification) %> |
 <%= link_to 'Back', notifications_path %>
+</div>
