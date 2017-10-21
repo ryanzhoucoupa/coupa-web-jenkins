@@ -4,6 +4,10 @@ class User < ApplicationRecord
   validates_uniqueness_of :github_login
   has_many :notifications, primary_key: :github_login, foreign_key: :github_login
 
+  def deliverable?
+    self.expo_push_token.present?
+  end
+
   def self.find_or_create_from_auth(auth)
     user = User.find_or_create_by(provider: auth['provider'], uid: auth['uid'])
     user.github_login = auth['info']['nickname']

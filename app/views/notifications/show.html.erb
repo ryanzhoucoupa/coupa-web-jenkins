@@ -8,7 +8,7 @@
   <pre><%= JSON.pretty_generate(payload) %></pre>
 </p>
 
-<%= link_to 'Deliver', deliver_notification_path(@notification), method: :post %> | 
+<%= link_to('Deliver', deliver_notification_path(@notification), method: :post) @notification.user.deliverable? %> | 
 <%= link_to 'Edit', edit_notification_path(@notification) %> |
 <%= link_to 'Back', notifications_path %>
 </div>

@@ -52,7 +52,7 @@ class NotificationsController < ApplicationController
     id = params.fetch(:id, nil)
     notification = Notification.find_by(id: id)
 
-    if notification && notification.user.expo_push_token
+    if notification && notification.user.deliverable?
       messages = [{
         to: notification.user.expo_push_token,
         title: notification.title,
