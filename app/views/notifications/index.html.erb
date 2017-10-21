@@ -7,7 +7,8 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>User</th>      
+      <th>User</th>  
+      <th>PR ID</th>    
       <th>Created</th>
       <th colspan="4">Actions</th>
     </tr>
@@ -18,6 +19,7 @@
       <tr>
         <td><%= notification.id %></td>
         <td><%= link_to(notification.user.github_login, user_path(notification.user)) if notification.user.present?%></td>
+        <td><%= notification.pr_id %></td>
         <td><%= notification.created_at.in_time_zone('Pacific Time (US & Canada)') %></td>
         <td><%= link_to 'Show', notification %></td>
         <td><%= link_to 'Edit', edit_notification_path(notification) %></td>
