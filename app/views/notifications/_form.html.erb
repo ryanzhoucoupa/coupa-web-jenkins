@@ -1,6 +1,7 @@
 <%= form_with(model: notification, local: true) do |form| %>
   github_login: <%= form.text_field :github_login %><br />
   title: <%= form.text_field :title %><br />
+  pr_id: <%= form.text_field :pr_id %><br />
   body: <%= form.text_field :body %><br />
   data: <%= form.text_area :data %><br />
 
