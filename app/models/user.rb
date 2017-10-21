@@ -5,7 +5,7 @@ class User < ApplicationRecord
   has_many :notifications, primary_key: :github_login, foreign_key: :github_login
 
   def deliverable?
-    self.expo_push_token.present?
+    self.expo_push_token.present? && self.active
   end
 
   def self.find_or_create_from_auth(auth)
