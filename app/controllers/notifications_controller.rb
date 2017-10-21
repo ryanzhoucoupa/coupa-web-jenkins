@@ -93,7 +93,7 @@ class NotificationsController < ApplicationController
   # PATCH/PUT /notifications/1.json
   def update
     respond_to do |format|
-      if @notification.update(notification_params)
+      if @notification.update(params.fetch(:notification, {}))
         format.html { redirect_to @notification, notice: 'Notification was successfully updated.' }
         format.json { render :show, status: :ok, location: @notification }
       else
