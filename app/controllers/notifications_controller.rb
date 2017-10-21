@@ -56,7 +56,7 @@ class NotificationsController < ApplicationController
       messages = [{
         to: notification.user.expo_push_token,
         title: notification.title,
-        body: notification.body,
+        body: "PR #{notification.pr_id} status changed",
         data: { ghprbPullId: notification.pr_id, data: JSON.parse(notification.data) }
       }]
 
