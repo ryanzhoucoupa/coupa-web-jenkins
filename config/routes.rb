@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   put '/ept', to: 'users#ept'
+  put '/users/unregister', to: 'users#unregister'
+
   resources :users do
     member do
       get :qr

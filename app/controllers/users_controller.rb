@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :destroy]
-  protect_from_forgery :except => [:create, :ept]
+  protect_from_forgery :except => [:create, :ept, :unregister]
 
   # GET /users
   # GET /users.json
@@ -75,6 +75,18 @@ class UsersController < ApplicationController
       render json: @user
     else
       render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
+  def unregister
+    github_login = params.delete(:github_login)
+
+    user = User.find_by(github_login: github_login)
+
+    if user.update(expo_push_token: nil, active: false)
+      head :ok
+    else
+      render json: user.errors, status: :unprocessable_entity
     end
   end
 
