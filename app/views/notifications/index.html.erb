@@ -7,8 +7,8 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>User</th>  
-      <th>PR ID</th>    
+      <th>User</th>
+      <th>PR ID</th>
       <th>Created</th>
       <th colspan="4">Actions</th>
     </tr>
@@ -24,7 +24,7 @@
         <td><%= link_to 'Show', notification %></td>
         <td><%= link_to 'Edit', edit_notification_path(notification) %></td>
         <td><%= link_to 'Destroy', notification, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td><%= link_to('Deliver', deliver_notification_path(notification), method: :post) if notification.user.deliverable? %></td>
+        <td><%= link_to('Deliver', deliver_notification_path(notification), method: :post) if notification.user&.deliverable? %></td>
       </tr>
     <% end %>
   </tbody>

@@ -6,5 +6,5 @@ test:
 
 production:
   adapter: redis
-  url: redis://localhost:6379/1
+  url: redis://redistogo:afabc92cb0c562dba5452a5d0a9f586f@grouper.redistogo.com:11943/
   channel_prefix: coupa-jenkins-notifications_production

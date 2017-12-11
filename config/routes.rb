@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  # Serve websocket cable requests in-process
+  mount ActionCable.server => '/cable'
 
   put '/ept', to: 'users#ept'
   put '/users/unregister', to: 'users#unregister'
@@ -6,6 +8,7 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get :qr
+      get :action_cable
     end
   end
 

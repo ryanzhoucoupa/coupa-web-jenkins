@@ -1,10 +1,14 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :destroy]
   protect_from_forgery :except => [:create, :ept, :unregister]
+#  before_action :authenticate_user!, :except => [:create, :ept, :unregister]
+
+  HEROKU_DOMAIN = 'https://fierce-meadow-67656.herokuapp.com'
 
   # GET /users
   # GET /users.json
   def index
+    flash[:notice] = params.fetch(:message, '')
     @users = User.all
   end
 
@@ -26,7 +30,7 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
 
     if @user.github_login
-      @qrcode = RQRCode::QRCode.new("https://fierce-meadow-67656.herokuapp.com/ept.json?ghUser=#{@user.github_login}")
+      @qrcode = RQRCode::QRCode.new("#{HEROKU_DOMAIN}/ept.json?ghUser=#{@user.github_login}")
     end
   end
 
@@ -72,10 +76,26 @@ class UsersController < ApplicationController
     @user = User.find_by(github_login: github_login)
 
     if @user.update(user_params)
-      render json: @user
+      link = Rails.env.production? ? HEROKU_DOMAIN : "http://localhost:3000"
+      link += "/users?message=Activated"
+
+      #need to setup redis on heroku
+      # heroku addons:add redistogo
+      #$ heroku config --app action-cable-example | grep REDISTOGO_URL
+      #REDISTOGO_URL:            redis://redistogo:d0ed635634356d4408c1effb00bc9493@hoki.redistogo.com:9247/
+      # config/cable.yml
+      # https://blog.heroku.com/real_time_rails_implementing_websockets_in_rails_5_with_action_cable
+      ActionCable.server.broadcast 'messages', link: link
+      render json: {}, status: :ok
     else
       render json: @user.errors, status: :unprocessable_entity
     end
+  end
+
+  def action_cable
+    link = Rails.env.production? ? HEROKU_DOMAIN : "http://localhost:3000"
+    link += "/users?message=Activated"
+    head :ok
   end
 
   def unregister
